@@ -6,6 +6,9 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RESET='\033[0;0m'
 
+echo -e "\n\nThis script was downloaded from ${GREEN}https://github.com/abnerfs/bash-typescript-init-script${RESET}"
+echo -e "If you have any problem/suggestion feel free to submit an issue\n\n"
+
 if [ -d ".git" ]; then
     echo -e "- ${YELLOW}Git already initialized, skipping...${RESET}"
 else
@@ -48,4 +51,5 @@ else
     echo "console.log(\"TypeScript is working from index.ts 😊\");" >> src/index.ts
 fi
 
-echo -e "- ${GREEN}Done 😊${RESET}"
+echo -e "- ${GREEN}Done 😊${RESET}\n"
+echo -e "Try to run your project using ${GREEN}npm run dev${RESET} or ${GREEN}yarn dev${RESET}"
