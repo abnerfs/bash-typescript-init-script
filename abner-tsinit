@@ -1,0 +1,51 @@
+#!/bin/bash
+WORKINGDIR=$(pwd)
+MYDIR=`dirname "$0"`
+
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RESET='\033[0;0m'
+
+if [ -d ".git" ]; then
+    echo -e "- ${YELLOW}Git already initialized, skipping...${RESET}"
+else
+    echo -e "- ${GREEN}Initializing git...${RESET}"
+    git init
+fi
+
+
+if [ -f ".gitignore" ]; then
+    echo -e "- ${YELLOW}.gitignore already initialized, skipping...${RESET}"
+else
+    echo -e "- ${GREEN}Downloading .gitignore...${RESET}"
+    curl https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore --output .gitignore
+fi
+
+if [ -f "tsconfig.json" ]; then
+    echo -e "- ${YELLOW}tsconfig.json already initialized, skipping...${RESET}"
+else
+    echo -e "- ${GREEN}Downloading tsconfig.json...${RESET}"
+    curl https://gist.githubusercontent.com/abnerfs/2861fbd531cf84f2196651193580f73a/raw/cdaef0f3634ea9b3c7b0f8cca84fda260c560b63/tsconfig.json --output tsconfig.json
+fi
+
+if [ -f "package.json" ]; then
+    echo -e "- ${YELLOW}package.json already initialized, skipping...${RESET}"
+else
+    echo -e "- ${GREEN}Initializing package.json with default values${RESET}"
+    npm init -y
+    echo -e "- ${GREEN}Updating package.json scripts${RESET}"
+    node $MYDIR/edit-package.js $WORKINGDIR
+    echo -e "- ${GREEN}Installing dev dependencies${RESET}"
+    npm i typescript ts-node ts-node-dev @types/node --save-dev
+fi
+
+if [ -d "src" ]; then
+    echo -e "- ${YELLOW}src folder already created, skipping...${RESET}"
+else
+    echo -e "- ${GREEN}Creating src folder...${RESET}"
+    mkdir src
+    echo -e "- ${GREEN}Creating index.ts...${RESET}"
+    echo "console.log(\"TypeScript is working from index.ts 😊\");" >> src/index.ts
+fi
+
+echo -e "- ${GREEN}Done 😊${RESET}"

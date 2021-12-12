@@ -1,0 +1,3 @@
+#!/bin/bash
+cp abner-tsinit /bin/
+cp edit-package.js /bin/

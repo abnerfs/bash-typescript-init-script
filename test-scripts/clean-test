@@ -1,0 +1,8 @@
+#!/bin/bash
+rm tsconfig.json
+rm package.json
+rm package-lock.json
+rm -rf node_modules
+rm -rf .git
+rm .gitignore
+rm -rf src
