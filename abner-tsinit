@@ -37,7 +37,17 @@ else
     echo -e "- ${GREEN}Initializing package.json with default values${RESET}"
     npm init -y
     echo -e "- ${GREEN}Updating package.json scripts${RESET}"
-    node $MYDIR/edit-package.js $WORKINGDIR
+    node -p "const pwd = '$WORKINGDIR';
+            const packagePath = pwd + '/package.json';
+            const fs = require('fs');
+            const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+            packageJson.scripts = {
+                build: 'tsc',
+                dev: 'ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts'
+            }
+            const packageJsonStr = JSON.stringify(packageJson, null, 2);
+            fs.writeFileSync(packagePath, packageJsonStr, 'utf8');"
+            
     echo -e "- ${GREEN}Installing dev dependencies${RESET}"
     npm i typescript ts-node ts-node-dev @types/node --save-dev
 fi
